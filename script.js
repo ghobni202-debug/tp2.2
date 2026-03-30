@@ -1,43 +1,46 @@
- function addCourse() {
-2 var row = document.createElement(’div’);
-3 row.className = ’course-row’;
-4 row.innerHTML =
-5 ’<label>Course:</label>’ +
-6 ’<input type="text" name="course[]" ’ +
-7 ’placeholder="e.g. Mathematics" required>’ +
-8 ’<label>Credits:</label>’ +
-9 ’<input type="number" name="credits[]" ’ +
-10 ’placeholder="e.g. 3" min="1" required>’ +
-11 ’<label>Grade:</label>’ +
-12 ’<select name="grade[]">’ +
- ’<option value="4.0">A</option>’ +
-14 ’<option value="3.0">B</option>’ +
-15 ’<option value="2.0">C</option>’ +
-16 ’<option value="1.0">D</option>’ +
-17 ’<option value="0.0">F</option>’ +
-18 ’</select>’ +
-19 ’<button type="button" ’ +
-20 ’onclick="this.parentNode.remove()">Remove</button>’;
-21 document.getElementById(’courses’).appendChild(row);
-22 }
-23
-24 function validateForm() {
-25 var courses = document.querySelectorAll(’[name="course[]"]’);
-26 var credits = document.querySelectorAll(’[name="credits[]"]’);
-27
-28 for (var i = 0; i < courses.length; i++) {
-29 if (courses[i].value === "") {
-30 alert("All course name fields are required.");
-31 return false;
-32 }
-33 }
-34 for (var j = 0; j < credits.length; j++) {
-35 if (isNaN(credits[j].value) || credits[j].value <= 0) {
-36 alert("Credit hours must be positive numbers.");
-37 return false;
-38 }
-39 }
-40 return true;
-41 }
+// Function to add a new course row dynamically
+function addCourse() {
+    var row = document.createElement('div');
+    row.className = 'course-row';
+    
+    row.innerHTML = 
+        '<label>Course:</label>' +
+        '<input type="text" name="course[]" placeholder="e.g. Mathematics" required>' +
+        '<label>Credits:</label>' +
+        '<input type="number" name="credits[]" placeholder="e.g. 3" min="1" required>' +
+        '<label>Grade:</label>' +
+        '<select name="grade[]">' +
+            '<option value="4.0">A</option>' +
+            '<option value="3.0">B</option>' +
+            '<option value="2.0">C</option>' +
+            '<option value="1.0">D</option>' +
+            '<option value="0.0">F</option>' +
+        '</select>' +
+        '<button type="button" onclick="this.parentNode.remove()">Remove</button>';
+    
+    document.getElementById('courses').appendChild(row);
+}
 
-
+// Function to validate form before submission
+function validateForm() {
+    var courses = document.querySelectorAll('input[name="course[]"]');
+    var credits = document.querySelectorAll('input[name="credits[]"]');
+    
+    // Check all course name fields are filled
+    for (var i = 0; i < courses.length; i++) {
+        if (courses[i].value.trim() === "") {
+            alert("All course name fields are required.");
+            return false;
+        }
+    }
+    
+    // Check all credit fields are valid positive numbers
+    for (var j = 0; j < credits.length; j++) {
+        if (isNaN(credits[j].value) || credits[j].value <= 0) {
+            alert("Credit hours must be positive numbers.");
+            return false;
+        }
+    }
+    
+    return true;
+}
