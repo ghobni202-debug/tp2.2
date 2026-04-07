@@ -7,36 +7,36 @@ if (isset($_POST['course'], $_POST['credits'], $_POST['grade'])) {
     $credits = $_POST['credits'];
     $grades  = $_POST['grade'];
 
-    $totalPoints = 0;
     $totalCredits = 0;
+    $totalPoints  = 0;
 
-    $tableHtml = '<table class="table table-bordered mt-3">';
-    $tableHtml .= '<thead class="thead-dark">
-    <tr>
-    <th>Course</th>
-    <th>Credits</th>
-    <th>Grade</th>
-    <th>Grade Points</th>
-    </tr></thead><tbody>';
+    $tableHtml = '<table class="table table-bordered mt-3">
+    <thead class="thead-dark">
+        <tr>
+            <th>Course</th>
+            <th>Credits</th>
+            <th>Grade</th>
+        </tr>
+    </thead>
+    <tbody>';
 
     for ($i = 0; $i < count($courses); $i++) {
 
         $course = htmlspecialchars($courses[$i]);
-        $cr = floatval($credits[$i]);
-        $g = floatval($grades[$i]);
+        $cr     = floatval($credits[$i]);
+        $gr     = floatval($grades[$i]);
 
         if ($cr <= 0) continue;
 
-        $pts = $cr * $g;
+        $points = $cr * $gr;
 
-        $totalPoints += $pts;
+        $totalPoints  += $points;
         $totalCredits += $cr;
 
         $tableHtml .= "<tr>
-        <td>$course</td>
-        <td>$cr</td>
-        <td>$g</td>
-        <td>$pts</td>
+            <td>$course</td>
+            <td>$cr</td>
+            <td>$gr</td>
         </tr>";
     }
 
@@ -48,15 +48,15 @@ if (isset($_POST['course'], $_POST['credits'], $_POST['grade'])) {
 
         if ($gpa >= 3.7) {
             $interpretation = "Distinction";
-        } elseif ($gpa >= 3.0) {
+        } elseif ($gpa >= 3) {
             $interpretation = "Merit";
-        } elseif ($gpa >= 2.0) {
+        } elseif ($gpa >= 2) {
             $interpretation = "Pass";
         } else {
             $interpretation = "Fail";
         }
 
-        $message = 'Your GPA is ' . number_format($gpa, 2) . " ($interpretation)";
+        $message = "Your GPA is " . number_format($gpa, 2) . " ($interpretation)";
 
         echo json_encode([
             'success' => true,
@@ -80,6 +80,8 @@ if (isset($_POST['course'], $_POST['credits'], $_POST['grade'])) {
         'message' => 'Data not received.'
     ]);
 }
+
+exit;
 ?>
 
 
