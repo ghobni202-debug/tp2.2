@@ -7,38 +7,36 @@ if (isset($_POST['course'], $_POST['credits'], $_POST['grade'])) {
     $credits = $_POST['credits'];
     $grades  = $_POST['grade'];
 
+    $totalPoints = 0;
     $totalCredits = 0;
-    $totalPoints  = 0;
 
-    $tableHtml = '<table class="table table-bordered mt-3">
-    <thead class="thead-dark">
-        <tr>
-            <th>Course</th>
-            <th>Credits</th>
-            <th>Grade</th>
-            <th>Points</th>
-        </tr>
-    </thead>
-    <tbody>';
+    $tableHtml = '<table class="table table-bordered mt-3">';
+    $tableHtml .= '<thead class="thead-dark">
+    <tr>
+    <th>Course</th>
+    <th>Credits</th>
+    <th>Grade</th>
+    <th>Grade Points</th>
+    </tr></thead><tbody>';
 
     for ($i = 0; $i < count($courses); $i++) {
 
         $course = htmlspecialchars($courses[$i]);
-        $cr     = floatval($credits[$i]);
-        $g      = floatval($grades[$i]);
+        $cr = floatval($credits[$i]);
+        $g = floatval($grades[$i]);
 
         if ($cr <= 0) continue;
 
-        $points = $cr * $g;
+        $pts = $cr * $g;
 
-        $totalPoints  += $points;
+        $totalPoints += $pts;
         $totalCredits += $cr;
 
         $tableHtml .= "<tr>
-            <td>$course</td>
-            <td>$cr</td>
-            <td>$g</td>
-            <td>$points</td>
+        <td>$course</td>
+        <td>$cr</td>
+        <td>$g</td>
+        <td>$pts</td>
         </tr>";
     }
 
@@ -58,7 +56,7 @@ if (isset($_POST['course'], $_POST['credits'], $_POST['grade'])) {
             $interpretation = "Fail";
         }
 
-        $message = "Your GPA is " . number_format($gpa, 2) . " ($interpretation)";
+        $message = 'Your GPA is ' . number_format($gpa, 2) . " ($interpretation)";
 
         echo json_encode([
             'success' => true,
@@ -82,6 +80,6 @@ if (isset($_POST['course'], $_POST['credits'], $_POST['grade'])) {
         'message' => 'Data not received.'
     ]);
 }
-
-exit;
 ?>
+
+
